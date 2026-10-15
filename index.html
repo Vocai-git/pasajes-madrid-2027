@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasajes Buenos Aires ⇄ Madrid · mayo 2027</title>
+<meta name="description" content="Ida y vuelta Ezeiza–Madrid, 3 meses en Europa saliendo en mayo 2027: las opciones más baratas con link directo a cada vuelo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fcfcfb; --card:#f4f3ef; --card-hi:#e8f1fc; --line:#e3e2dc;
+  --ink:#0b0b0b; --ink2:#52514e; --muted:#8a8984;
+  --acc:#2a78d6; --acc-d:#1d5aa6; --acc-l:#b7d0f0; --on-acc:#fff;
+  --good:#008300; --warn:#b25a00;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#141413; --card:#1f1f1d; --card-hi:#16263b; --line:#33322f;
+    --ink:#f0efec; --ink2:#c3c2b7; --muted:#8f8e86;
+    --acc:#3987e5; --acc-d:#6aa6ee; --acc-l:#2c4a70; --on-acc:#fff;
+    --good:#3fae3f; --warn:#e08a3a;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.topbar{height:5px;background:var(--acc)}
+main{max-width:860px;margin:0 auto;padding:28px 16px 64px}
+a{color:var(--acc)}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--acc);text-transform:uppercase;margin:0 0 6px}
+h1{font-size:clamp(28px,6vw,40px);line-height:1.12;margin:0 0 10px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:24px;line-height:1.25;margin:48px 0 6px;font-weight:700;letter-spacing:-.01em;scroll-margin-top:16px}
+h3{font-size:17px;margin:0;font-weight:600}
+.sub{color:var(--ink2);font-size:17px;margin:0 0 24px;max-width:640px}
+.lead{color:var(--ink2);margin:0 0 16px}
+.small{font-size:13px;color:var(--ink2)}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;border:1.5px solid var(--acc);transition:transform .08s ease,background .15s ease;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--acc);color:var(--on-acc)}
+.btn.primary:hover{background:var(--acc-d);border-color:var(--acc-d)}
+.btn.ghost{background:transparent;color:var(--acc)}
+.btn.ghost:hover{background:var(--card-hi)}
+.btn.sm{padding:7px 14px;font-size:13px}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.hero{background:var(--card-hi);border-radius:16px;padding:22px;display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-items:start}
+.hero .label,.label{font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--acc);text-transform:uppercase}
+.price{font-size:44px;font-weight:800;line-height:1;letter-spacing:-.02em;margin:2px 0 6px}
+.ticks{list-style:none;padding:0;margin:12px 0 0}
+.ticks li{margin:3px 0}
+.ok{color:var(--good);font-weight:700}
+.no{color:var(--warn);font-weight:700}
+.bul{padding-left:20px;margin:10px 0}
+.bul li{margin:6px 0}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;list-style:none}
+.toc a{display:block;padding:7px 12px;border-radius:999px;background:var(--card);text-decoration:none;font-size:14px;font-weight:500}
+.toc a:hover{background:var(--card-hi)}
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.tbl th{font-size:12px;font-weight:600;color:var(--ink2);text-align:left;border-bottom:1.5px solid var(--ink2);padding:8px 6px}
+.tbl td{border-bottom:1px solid var(--line);padding:10px 6px;vertical-align:middle}
+.tbl tr.best td{background:var(--card-hi)}
+.tbl tr.ref td{color:var(--ink2)}
+.tbl .num{font-weight:700}
+.tbl .links a{display:block;font-size:13px;font-weight:500}
+.tbl .pr{font-weight:700;white-space:nowrap}
+@media (max-width:680px){
+  .tbl thead{display:none}
+  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}
+  .tbl tr{background:var(--card);border-radius:12px;padding:10px 12px;margin:0 0 10px}
+  .tbl tr.best{background:var(--card-hi)}
+  .tbl tr.best td{background:transparent}
+  .tbl td{border:0;padding:3px 0}
+  .tbl td[data-l]::before{content:attr(data-l) ": ";color:var(--muted);font-size:12px}
+  .tbl .links a{display:inline-block;margin-right:14px}
+  .hero{grid-template-columns:1fr}
+}
+/* cards */
+.card{background:var(--card);border-radius:14px;padding:18px;margin:12px 0;display:grid;grid-template-columns:1fr auto;gap:14px;scroll-margin-top:16px}
+.card.best{background:var(--card-hi)}
+.card .meta{color:var(--ink2);font-size:14px;margin:2px 0 10px}
+.card .side{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.card .p{font-size:28px;font-weight:800;line-height:1}
+.leg{display:grid;grid-template-columns:130px 1fr;gap:2px 12px;font-size:14px;margin:6px 0 10px}
+.leg b{font-weight:600}
+.leg span.d{color:var(--ink2);grid-column:2;font-size:13px;margin-bottom:6px}
+.note{font-size:13px;color:var(--ink2);margin:8px 0 0}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .card .side{text-align:left;align-items:flex-start}
+  .leg{grid-template-columns:1fr}
+  .leg span.d{grid-column:1}
+}
+/* chart */
+.chartwrap{position:relative;margin-top:12px}
+#chart{width:100%;height:auto;display:block}
+#chart .bar{cursor:pointer}
+#chart .hit{fill:transparent;cursor:pointer}
+#tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.35;padding:8px 10px;border-radius:8px;opacity:0;transform:translate(-50%,-110%);transition:opacity .1s;white-space:nowrap;z-index:2}
+#tip b{font-weight:700}
+/* promos */
+.ptbl td:first-child{font-weight:600}
+.rec{background:var(--card-hi);border-radius:14px;padding:18px;margin-top:18px}
+.rec p{margin:4px 0 14px}
+/* checklist */
+.check{list-style:none;padding:0;margin:12px 0}
+.check li{margin:0 0 10px}
+.check label{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:10px 12px;border-radius:10px;background:var(--card)}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--acc);flex:none}
+.check input:checked + span{color:var(--muted);text-decoration:line-through}
+.progress{font-size:14px;color:var(--ink2)}
+.src li{margin:6px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<main>
+  <p class="kicker">Investigación de pasajes · 15 de octubre de 2026</p>
+  <h1>Buenos Aires ⇄ Madrid<br>3 meses en Europa · mayo 2027</h1>
+  <p class="sub">Ida y vuelta desde Ezeiza con fechas flexibles. Precios reales consultados en Despegar y Google Flights, por persona, clase turista, en dólares.</p>
+
+  <section class="hero" aria-label="La opción más barata">
+    <div>
+      <div class="label">La más barata que encontramos</div>
+      <h3 style="margin-top:6px">Plus Ultra · directo ida y vuelta</h3>
+      <div class="muted" style="color:var(--ink2)">Jue 27 may → Lun 23 ago 2027</div>
+      <ul class="ticks">
+        <li><span class="ok">✓</span> Valija despachada incluida</li>
+        <li><span class="ok">✓</span> Sin escalas (unas 12 h por tramo)</li>
+        <li><span class="ok">✓</span> 88 días en Europa (el límite es 90)</li>
+      </ul>
+    </div>
+    <div>
+      <div class="price">US$944</div>
+      <div class="small">pagando con débito en dólares<br>US$983 precio final con tarjeta</div>
+      <div class="btns" style="margin-top:14px">
+        <a class="btn primary" target="_blank" rel="noopener" href="https://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/MAD/2027-05-27/2027-08-23/1/0/0?currency=USD">Ver en Despegar ↗</a>
+        <a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q=Flights%20from%20EZE%20to%20MAD%20on%202027-05-27%20through%202027-08-23&curr=USD&hl=es-419&gl=AR">Ver en Google Flights ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <h3 style="margin-top:28px">En 30 segundos</h3>
+  <ul class="bul">
+    <li><b>Conviene salir entre el 20 de mayo y el 12 de junio y volver a fines de agosto.</b> Si se sale a principios de mayo, la vuelta cae en julio o principios de agosto (vacaciones de invierno) y el pasaje sube a US$1.250–1.600.</li>
+    <li><b>No conviene esperar.</b> Lo que encontramos ya es más barato que la mejor oferta a Madrid del Cyber Monday 2025 (US$1.017 directo con valija).</li>
+    <li><b>Pagar en dólares.</b> Si se paga en pesos se suma la percepción del 30% de ARCA.</li>
+    <li>Llegar a Barcelona, Roma o Lisboa no sale más barato (US$1.100–1.180), y comprar dos pasajes de ida por separado tampoco (unos US$1.350).</li>
+  </ul>
+
+  <ul class="toc" aria-label="Índice">
+    <li><a href="#comparativa">1. Comparativa</a></li>
+    <li><a href="#detalle">2. Detalle de cada vuelo</a></li>
+    <li><a href="#fechas">3. Qué fechas convienen</a></li>
+    <li><a href="#promos">4. Promos y cuándo comprar</a></li>
+    <li><a href="#checklist">5. Checklist</a></li>
+    <li><a href="#fuentes">6. Fuentes</a></li>
+  </ul>
+
+  <h2 id="comparativa">1. Comparativa de las 5 opciones</h2>
+  <p class="lead">Todas son ida y vuelta Ezeiza – Madrid, con 88 días en Europa. De más barata a más cara. Tocá el número para ver el detalle.</p>
+  <table class="tbl" id="cmp">
+    <thead><tr><th>#</th><th>Fechas 2027</th><th>Aerolínea</th><th>Valija</th><th>Con débito</th><th>Precio final</th><th>Ver vuelo</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="small">“Con débito”: precio de Despegar pagando con tarjeta de débito de una cuenta en dólares. “Precio final”: con tarjeta de crédito. LATAM con valija despachada: US$1.105 con débito / US$1.151 final. Las dos últimas filas son de referencia.</p>
+
+  <h2 id="detalle">2. Detalle de cada vuelo</h2>
+  <div id="cards"></div>
+
+  <h2 id="fechas">3. Qué fechas convienen</h2>
+  <p class="lead">Precio más bajo publicado por las aerolíneas para un viaje de 88 días, según el día de salida. Son precios de referencia de Google Flights, sin descuentos de agencia (por eso en Despegar salen más baratos), pero muestran la tendencia. <b>Pasá el mouse o tocá una barra</b> para ver el precio; con un clic se abre esa fecha en Google Flights.</p>
+  <div class="chartwrap">
+    <svg id="chart" viewBox="0 0 760 290" role="img" aria-label="Precio de un viaje de 88 días según la fecha de salida, del 15 de abril al 13 de junio de 2027"></svg>
+    <div id="tip" role="status"></div>
+  </div>
+  <ul class="bul">
+    <li><b>Lo más barato:</b> salir entre el 18 de mayo y el 12 de junio. Las cinco barras más oscuras son los días más baratos.</li>
+    <li><b>Lo más caro:</b> salir del 1 al 12 de mayo, porque la vuelta cae en plena temporada alta de regreso (julio y principios de agosto).</li>
+    <li>Volver a fines de agosto o principios de septiembre es más barato que volver en julio, aunque el viaje dure lo mismo.</li>
+  </ul>
+
+  <h2 id="promos">4. Promos y cuándo comprar</h2>
+  <table class="tbl ptbl">
+    <thead><tr><th>Promo que circuló</th><th>Precio</th><th>Por qué no sirve para este viaje</th></tr></thead>
+    <tbody>
+      <tr><td data-l="Promo">Iberia directo (1/10/2026)</td><td data-l="Precio">desde US$703</td><td data-l="Por qué no">Agotada, y era para marzo/noviembre con estadías de 10 a 35 días.</td></tr>
+      <tr><td data-l="Promo">Plus Ultra directo con valija (sept–oct 2026)</td><td data-l="Precio">US$823–870</td><td data-l="Por qué no">Vencía el 11/10 y era para estadías de unas 2 semanas.</td></tr>
+      <tr><td data-l="Promo">Aerolíneas Argentinas hasta 20% off (14/10/2026)</td><td data-l="Precio">–</td><td data-l="Por qué no">Solo con American Express de Santander pagando en pesos (se suma el 30%).</td></tr>
+      <tr><td data-l="Promo">Avianca con millas Smiles (Cyber Monday 2025)</td><td data-l="Precio">US$501 por tramo</td><td data-l="Por qué no">Unos US$1.000 ida y vuelta: no mejora lo que ya encontramos.</td></tr>
+    </tbody>
+  </table>
+  <h3 style="margin-top:22px">Próximas fechas de ofertas</h3>
+  <ul class="bul">
+    <li><b>Cyber Monday:</b> 2, 3 y 4 de noviembre de 2026 (muchas marcas lo estiran hasta el 8).</li>
+    <li><b>Black Friday:</b> viernes 27 de noviembre de 2026.</li>
+    <li><b>Referencia del año pasado:</b> en el Cyber Monday 2025 lo mejor a Madrid fue US$1.017 directo con valija (Aerolíneas Argentinas). La opción 1 ya está por debajo.</li>
+  </ul>
+  <div class="rec">
+    <div class="label">Recomendación</div>
+    <p>Comprar ya la opción 1 (Plus Ultra, US$944). Despegar indica que estas tarifas rigen del 15 al 17 de octubre de 2026, con 4 lugares por tarifa. Si igual prefieren esperar al Cyber Monday, activen la alerta de precios en Google Flights para esas fechas.</p>
+    <div class="btns">
+      <a class="btn primary" target="_blank" rel="noopener" href="https://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/MAD/2027-05-27/2027-08-23/1/0/0?currency=USD">Comprar opción 1 en Despegar ↗</a>
+      <a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q=Flights%20from%20EZE%20to%20MAD%20on%202027-05-27%20through%202027-08-23&curr=USD&hl=es-419&gl=AR">Crear alerta en Google Flights ↗</a>
+    </div>
+  </div>
+
+  <h2 id="checklist">5. Checklist antes de comprar</h2>
+  <p class="progress" id="prog"></p>
+  <ul class="check" id="checks">
+    <li><label><input type="checkbox" data-k="c1"><span><b>Pagar en dólares</b>: débito de una cuenta en USD, o tarjeta pagando el resumen en dólares. Si se paga en pesos se suma la percepción del 30%.</span></label></li>
+    <li><label><input type="checkbox" data-k="c2"><span><b>Confirmar el peso de la valija</b> incluida (en las promos de Plus Ultra suele ser 15 kg, no 23).</span></label></li>
+    <li><label><input type="checkbox" data-k="c3"><span><b>Revisar los días en Europa</b>: máximo 90 días dentro de 180, contando el día de llegada y el de salida. Todas las opciones de esta página dan 88.</span></label></li>
+    <li><label><input type="checkbox" data-k="c4"><span><b>Pasaporte vigente</b> por lo menos 3 meses después de la fecha de salida de Europa.</span></label></li>
+    <li><label><input type="checkbox" data-k="c5"><span><b>ETIAS</b>: autorización online para entrar a Europa que se estima que empieza a exigirse a fines de 2026. Para mayo de 2027 seguramente haga falta (no aplica con pasaporte europeo).</span></label></li>
+    <li><label><input type="checkbox" data-k="c6"><span><b>Seguro de viaje</b> y comprobantes a mano: en la frontera pueden pedir alojamiento, medios económicos y el pasaje de vuelta.</span></label></li>
+    <li><label><input type="checkbox" data-k="c7"><span><b>Revisar las condiciones de cambio y cancelación</b> de la tarifa antes de pagar.</span></label></li>
+    <li><label><input type="checkbox" data-k="c8"><span><b>Crear la alerta de precios</b> en Google Flights por si baja en Cyber Monday o Black Friday.</span></label></li>
+  </ul>
+  <p class="small">Los tildes quedan guardados en este navegador.</p>
+
+  <h2 id="fuentes">6. Fuentes</h2>
+  <ul class="src">
+    <li><a target="_blank" rel="noopener" href="https://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/MAD/2027-05-27/2027-08-23/1/0/0?currency=USD">Despegar: búsqueda Ezeiza–Madrid de la opción 1 ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q=Flights%20from%20EZE%20to%20MAD%20on%202027-05-27%20through%202027-08-23&curr=USD&hl=es-419&gl=AR">Google Flights: misma búsqueda ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://promociones-aereas.com.ar/2026/10/corre-vuelos-a-madrid-directos-desde-buenos-aires-iberia-rt-p.html">Promociones Aéreas: Iberia desde US$703 ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://promociones-aereas.com.ar/2026/10/vuelos-directos-a-madrid-con-equipaje-despachado-desde-bs-as-plus-ultra-rt-p.html">Promociones Aéreas: Plus Ultra desde US$870 ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://promociones-aereas.com.ar/2026/10/off-en-vuelos-directos-a-destinos-internacionales-aerolineas-argentinas-rt-p.html">Promociones Aéreas: Aerolíneas hasta 20% off ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://promociones-aereas.com.ar/ciudad/madrid">Promociones Aéreas: todas las ofertas a Madrid ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://promociones-aereas.com.ar/2025/11/lo-mejor-del-cyber-monday-2025-un-resumen-para-que-no-se-pierdan-de-nada-m.html">Promociones Aéreas: resumen del Cyber Monday 2025 ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.infoviajera.com/2026/10/para-emitir-ahora-vuelos-directos-buenos-aires-madrid-por-720-usd-ida-y-vuelta/">InfoViajera: Iberia directo por US$720 ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.universal-assistance.com/uablog/cuando-es-el-cyber-monday/">Universal Assistance: fechas del Cyber Monday 2026 ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.elonce.com/economia/pese-al-fin-del-dolar-tarjeta-el-recargo-del-30-sigue-vigente-para-servicios-turisticos-en-pesos.htm">Elonce: el recargo del 30% sigue para turismo en pesos ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.paxassistance.com/blog/tips-de-viajes/ees-biometrico-etias-para-viajar-a-europa-desde-argentina/">Pax Assistance: EES y ETIAS para viajar a Europa ↗</a></li>
+  </ul>
+
+  <footer>Precios por persona, clase turista, consultados el 15/10/2026. Las tarifas cambian todo el tiempo: confirmá el precio final antes de pagar. Los links de Despegar abren la búsqueda con esas fechas; ahí se elige el vuelo de la lista.</footer>
+</main>
+
+<script>
+const GF=(a,b)=>`https://www.google.com/travel/flights?q=Flights%20from%20EZE%20to%20MAD%20on%20${a}%20through%20${b}&curr=USD&hl=es-419&gl=AR`;
+const DSP=(a,b)=>`https://www.despegar.com.ar/shop/flights/results/roundtrip/EZE/MAD/${a}/${b}/1/0/0?currency=USD`;
+const money=v=>'US$'+v.toLocaleString('es-AR');
+const ext=(href,txt,cls)=>`<a class="${cls||''}" target="_blank" rel="noopener" href="${href}">${txt} ↗</a>`;
+
+const OPTS=[
+ {n:1,air:'Plus Ultra',tipo:'Directo ida y vuelta',d1:'2027-05-27',d2:'2027-08-23',f:'Jue 27 may → Lun 23 ago',deb:944,fin:983,val:true,best:true,
+  ida:['Ida · jue 27 may','13:25 EZE → 06:30 MAD (+1)','12 h 05 m · directo'],
+  vta:['Vuelta · lun 23 ago','23:10 MAD → 06:45 EZE (+1)','12 h 35 m · directo'],
+  sch:'88 días en Europa (28 may – 23 ago)',
+  nota:'La más barata y además directa, con valija despachada incluida. Las promos de Plus Ultra suelen dar 15 kg (no 23): confirmá el peso antes de pagar.'},
+ {n:2,air:'LATAM',tipo:'1 escala en São Paulo',d1:'2027-05-29',d2:'2027-08-25',f:'Sáb 29 may → Mié 25 ago',deb:969,fin:1009,val:false,
+  ida:['Ida · sáb 29 may','02:05 EZE → 05:35 MAD (+1)','22 h 30 m · espera de 9 h 15 m en São Paulo'],
+  vta:['Vuelta · mié 25 ago','14:45 MAD → 01:15 EZE (+1)','15 h 30 m · espera de 1 h 55 m en São Paulo'],
+  sch:'88 días en Europa (30 may – 25 ago)',
+  nota:'Solo equipaje de mano. Con valija despachada sube a US$1.105 con débito (US$1.151 precio final). La espera de más de 9 horas en la ida es el punto flojo.'},
+ {n:3,air:'LATAM',tipo:'1 escala (São Paulo / Santiago)',d1:'2027-06-09',d2:'2027-09-05',f:'Mié 9 jun → Dom 5 sep',deb:969,fin:1009,val:false,
+  ida:['Ida · mié 9 jun','17:00 EZE → 14:05 MAD (+1)','16 h 05 m · escala de 3 h 10 m en São Paulo'],
+  vta:['Vuelta · dom 5 sep','21:50 MAD → 10:30 EZE (+1)','17 h 40 m · escala de 2 h 10 m en Santiago'],
+  sch:'88 días en Europa (10 jun – 5 sep)',
+  nota:'Mismo precio que la opción 2 pero con escalas cortas. Solo equipaje de mano; con valija, US$1.105 con débito. Horarios según Google Flights.'},
+ {n:4,air:'Plus Ultra',tipo:'Directo ida y vuelta',d1:'2027-05-20',d2:'2027-08-16',f:'Jue 20 may → Lun 16 ago',deb:997,fin:1039,val:true,
+  sch:'88 días en Europa (21 may – 16 ago)',
+  nota:'Plan B si se agota la opción 1: misma aerolínea y mismo formato (ida jueves, vuelta lunes), una semana antes.'},
+ {n:5,air:'Plus Ultra',tipo:'Directo ida y vuelta',d1:'2027-05-13',d2:'2027-08-09',f:'Jue 13 may → Lun 9 ago',deb:1034,fin:1077,val:true,
+  sch:'88 días en Europa (14 may – 9 ago)',
+  nota:'La opción más temprana que sigue por debajo de US$1.100 con valija incluida.'}
+];
+
+// comparison table
+const tb=document.querySelector('#cmp tbody');
+tb.innerHTML=OPTS.map(o=>`<tr class="${o.best?'best':''}">
+ <td class="num"><a href="#op${o.n}">${o.n}</a></td>
+ <td data-l="Fechas">${o.f}</td>
+ <td data-l="Aerolínea"><b>${o.air}</b><br><span class="small">${o.tipo}</span></td>
+ <td data-l="Valija">${o.val?'<span class="ok">✓</span> Incluida':'<span class="no">✕</span> No'}</td>
+ <td data-l="Con débito" class="pr">${money(o.deb)}</td>
+ <td data-l="Precio final">${money(o.fin)}</td>
+ <td class="links">${ext(DSP(o.d1,o.d2),'Despegar')}${ext(GF(o.d1,o.d2),'Google')}</td></tr>`).join('')+
+ `<tr class="ref"><td>–</td><td data-l="Fechas">Jue 27 may → Lun 23 ago</td><td data-l="Aerolínea"><b>Aerolíneas Argentinas</b><br><span class="small">Directo · referencia</span></td><td data-l="Valija"><span class="no">✕</span> No</td><td data-l="Con débito">US$1.233</td><td data-l="Precio final">US$1.284</td><td class="links">${ext(DSP('2027-05-27','2027-08-23'),'Despegar')}</td></tr>
+  <tr class="ref"><td>–</td><td data-l="Fechas">Mismas fechas</td><td data-l="Aerolínea"><b>Iberia / Air Europa</b><br><span class="small">Directo · referencia</span></td><td data-l="Valija"><span class="ok">✓</span> Incluida</td><td data-l="Con débito">desde US$1.465</td><td data-l="Precio final">desde US$1.526</td><td class="links">${ext(GF('2027-05-27','2027-08-23'),'Google')}</td></tr>`;
+
+// cards
+document.getElementById('cards').innerHTML=OPTS.map(o=>`<article class="card ${o.best?'best':''}" id="op${o.n}">
+ <div>
+  ${o.best?'<div class="label">La más barata</div>':''}
+  <h3>Opción ${o.n} · ${o.air}</h3>
+  <div class="meta">${o.tipo} · ${o.f} 2027</div>
+  ${o.ida?`<div class="leg">${[o.ida,o.vta].map(l=>`<b>${l[0]}</b><span>${l[1]}</span><span class="d">${l[2]}</span>`).join('')}</div>`
+        :`<p style="margin:0 0 10px;font-size:14px">Directo los dos tramos, el mismo día de la semana que la opción 1 (ida jueves, vuelta lunes). Horarios exactos en el link.</p>`}
+  <div style="font-size:14px">${o.val?'<span class="ok">✓</span> Valija despachada incluida':'<span class="no">✕</span> Solo equipaje de mano'} · <span class="ok">✓</span> ${o.sch}</div>
+  <p class="note">${o.nota}</p>
+ </div>
+ <div class="side">
+  <div class="p">${money(o.deb)}</div>
+  <div class="small">con débito · ${money(o.fin)} final</div>
+  ${ext(DSP(o.d1,o.d2),'Despegar','btn primary sm')}
+  ${ext(GF(o.d1,o.d2),'Google Flights','btn ghost sm')}
+ </div></article>`).join('');
+
+// chart
+const RAW=`2027-04-15 1444|2027-04-16 1428|2027-04-17 1444|2027-04-18 1682|2027-04-19 1461|2027-04-20 1444|2027-04-21 1682|2027-04-22 1444|2027-04-23 1428|2027-04-24 1444|2027-04-25 1428|2027-04-26 1682|2027-04-27 1444|2027-04-28 1682|2027-04-29 1444|2027-04-30 1499|2027-05-01 1843|2027-05-02 1748|2027-05-03 1621|2027-05-04 1577|2027-05-05 1748|2027-05-06 1444|2027-05-07 1608|2027-05-08 1619|2027-05-09 1748|2027-05-10 1682|2027-05-11 1577|2027-05-12 1619|2027-05-13 1269|2027-05-14 1521|2027-05-15 1512|2027-05-16 1518|2027-05-17 1536|2027-05-18 1203|2027-05-19 1237|2027-05-20 1203|2027-05-21 1518|2027-05-22 1203|2027-05-23 1469|2027-05-24 1179|2027-05-25 1220|2027-05-26 1237|2027-05-27 1137|2027-05-28 1365|2027-05-29 1153|2027-05-30 1469|2027-05-31 1469|2027-06-01 1256|2027-06-02 1195|2027-06-03 1220|2027-06-04 1498|2027-06-05 1498|2027-06-06 1298|2027-06-07 1256|2027-06-08 1195|2027-06-09 1153|2027-06-10 1195|2027-06-11 1195|2027-06-12 1153|2027-06-13 1469`;
+const data=RAW.split('|').map(s=>{const[d,p]=s.split(' ');return{d:new Date(d+'T12:00:00'),iso:d,p:+p}});
+const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIA=['dom','lun','mar','mié','jue','vie','sáb'];
+const fmt=d=>`${DIA[d.getDay()]} ${d.getDate()} ${MES[d.getMonth()]}`;
+const add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const iso=d=>d.toISOString().slice(0,10);
+(function(){
+  const svg=document.getElementById('chart'),tip=document.getElementById('tip'),wrap=svg.parentNode;
+  const W=760,H=290,L=66,R=8,T=34,B=46,pw=W-L-R,ph=H-T-B,vmax=2000,n=data.length,slot=pw/n,bw=slot-2;
+  const y=v=>T+ph-ph*v/vmax;
+  const thr=[...data].map(x=>x.p).sort((a,b)=>a-b)[4];
+  let s='';
+  for(const v of [0,500,1000,1500,2000]){
+    s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${v?'var(--line)':'var(--muted)'}" stroke-width="1"/>`;
+    s+=`<text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${money(v)}</text>`;
+  }
+  // expensive window bracket (1–12 may)
+  const i1=data.findIndex(x=>x.iso==='2027-05-01'),i2=data.findIndex(x=>x.iso==='2027-05-12');
+  const x1=L+i1*slot+1,x2=L+i2*slot+slot-1,yb=y(1930);
+  s+=`<path d="M${x1} ${yb+5}V${yb}H${x2}V${yb+5}" fill="none" stroke="var(--warn)" stroke-width="1.2"/>`;
+  s+=`<text x="${(x1+x2)/2}" y="${yb-6}" text-anchor="middle" font-size="11" font-weight="600" fill="var(--warn)">Vuelta en julio / principios de agosto: más caro</text>`;
+  data.forEach((o,i)=>{
+    const x=L+i*slot+1,h=ph*o.p/vmax,top=y(o.p),cheap=o.p<=thr,r=Math.min(2,bw/2);
+    s+=`<path class="bar" d="M${x} ${T+ph}V${top+r}Q${x} ${top} ${x+r} ${top}H${x+bw-r}Q${x+bw} ${top} ${x+bw} ${top+r}V${T+ph}Z" fill="${cheap?'var(--acc)':'var(--acc-l)'}"/>`;
+    if(o.d.getDate()===1||o.d.getDate()===15||i===n-1){
+      const cx=L+i*slot+slot/2;
+      s+=`<line x1="${cx}" x2="${cx}" y1="${T+ph}" y2="${T+ph+4}" stroke="var(--muted)"/><text x="${cx}" y="${T+ph+17}" text-anchor="middle" font-size="11" fill="var(--ink2)">${o.d.getDate()} ${MES[o.d.getMonth()]}</text>`;
+    }
+  });
+  const im=data.reduce((a,o,i)=>o.p<data[a].p?i:a,0),xm=L+im*slot+1+bw/2,yl=y(1880);
+  s+=`<line x1="${xm}" x2="${xm}" y1="${y(data[im].p)-3}" y2="${yl+4}" stroke="var(--ink2)"/>`;
+  s+=`<text x="${xm}" y="${yl}" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Mínimo: ${money(data[im].p)} · sale ${data[im].d.getDate()} may</text>`;
+  s+=`<text x="${L}" y="${H-6}" font-size="11" fill="var(--muted)">Fecha de salida desde Ezeiza (la vuelta es 88 días después)</text>`;
+  data.forEach((o,i)=>{ s+=`<rect class="hit" data-i="${i}" x="${L+i*slot}" y="${T}" width="${slot}" height="${ph}"/>`; });
+  svg.innerHTML=s;
+  const show=(e,i)=>{
+    const o=data[i],ret=add(o.d,88),r=wrap.getBoundingClientRect(),sr=svg.getBoundingClientRect(),k=sr.width/W;
+    tip.innerHTML=`Sale <b>${fmt(o.d)}</b> · vuelve ${fmt(ret)}<br>desde <b>${money(o.p)}</b> · clic para abrir`;
+    const cx=(L+i*slot+slot/2)*k, cy=y(o.p)*k;
+    tip.style.left=Math.min(Math.max(cx,110),sr.width-110)+'px'; tip.style.top=cy+'px'; tip.style.opacity=1;
+    svg.querySelectorAll('.bar').forEach((b,j)=>b.style.opacity=j===i?1:.55);
+  };
+  const hide=()=>{tip.style.opacity=0;svg.querySelectorAll('.bar').forEach(b=>b.style.opacity=1)};
+  svg.querySelectorAll('.hit').forEach(h=>{
+    const i=+h.dataset.i;
+    h.addEventListener('mouseenter',e=>show(e,i));
+    h.addEventListener('mouseleave',hide);
+    h.addEventListener('click',()=>{const o=data[i];window.open(GF(o.iso,iso(add(o.d,88))),'_blank','noopener')});
+  });
+})();
+
+// checklist (saved per browser)
+(function(){
+  const boxes=[...document.querySelectorAll('#checks input')],prog=document.getElementById('prog');
+  let saved={};try{saved=JSON.parse(localStorage.getItem('checklist-madrid-2027')||'{}')}catch(e){}
+  const upd=()=>{const c=boxes.filter(b=>b.checked).length;prog.textContent=`${c} de ${boxes.length} listos`;
+    try{localStorage.setItem('checklist-madrid-2027',JSON.stringify(Object.fromEntries(boxes.map(b=>[b.dataset.k,b.checked]))))}catch(e){}};
+  boxes.forEach(b=>{b.checked=!!saved[b.dataset.k];b.addEventListener('change',upd)});upd();
+})();
+</script>
+</body>
+</html>
