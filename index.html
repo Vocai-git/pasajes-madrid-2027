@@ -144,7 +144,7 @@ body.locked{overflow:hidden}
 #np .vid iframe{width:100%;height:100%;display:block;border:0}
 #np .t{font-size:12px;line-height:1.35;min-width:0;color:#b7d0f0}
 #np .t b{display:block;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#np .nudge{display:none;color:#6aa6ee;font-weight:600}
+#np .nudge{display:none;color:#6aa6ee;font-weight:600}#np .hint{display:none;color:#6aa6ee;font-weight:600}#np.muted .hint{display:block}#np.muted.need .hint{display:none}#np{cursor:default}
 #np.need .nudge{display:block}
 #np button{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:#2a78d6;color:#fff;cursor:pointer;display:grid;place-items:center}
 #np button svg{width:14px;height:14px;fill:#fff}
@@ -157,20 +157,10 @@ body.locked{overflow:hidden}
 </style>
 </head>
 <body>
-<div id="splash" role="dialog" aria-label="Bienvenida">
-  <div class="in">
-    <div class="k">Buenos Aires ⇄ Madrid · mayo 2027</div>
-    <h2>Próxima parada: Madrid</h2>
-    <p>3 meses en Europa. Acá están los pasajes más baratos que encontramos.</p>
-    <button class="go" id="go">Embarcar ✈</button>
-    <small>Con música: The Doors · Break On Through</small>
-  </div>
-</div>
 <div id="np" class="paused" aria-label="Música">
   <div class="vid"><div id="ytp"></div></div>
   <div class="disc" aria-hidden="true"></div>
-  <div class="t"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><b>Break On Through</b>The Doors<span class="nudge">Tocá el video para escuchar</span></div>
-  <button id="pp" aria-label="Reproducir o pausar"><svg viewBox="0 0 16 16" id="ppi"><path d="M4 2l10 6-10 6z"/></svg></button>
+  <div class="t"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><b>Break On Through</b>The Doors<span class="hint">🔊 Tocá cualquier parte de la pantalla</span><span class="nudge">Tocá el video para escuchar</span></div>
 </div>
 <div class="topbar"></div>
 <main>
@@ -424,26 +414,32 @@ const iso=d=>d.toISOString().slice(0,10);
   boxes.forEach(b=>{b.checked=!!saved[b.dataset.k];b.addEventListener('change',upd)});upd();
 })();
 
-// music: The Doors – Break On Through (starts on "Embarcar"; tries autoplay too)
+// music: The Doors – Break On Through. Starts on page load; if the browser blocks sound,
+// it starts muted and turns the sound on (from the beginning) at the first touch/click/key anywhere.
 (function(){
-  const VID='-r679Hhs9Zs';
-  const splash=document.getElementById('splash'),go=document.getElementById('go'),np=document.getElementById('np'),
-        pp=document.getElementById('pp'),ppi=document.getElementById('ppi'),foto=document.getElementById('foto');
-  splash.style.backgroundImage=`url("${foto.src}")`;
-  document.body.classList.add('locked');
-  let player=null,ready=false,want=false;
-  const PLAY='<path d="M4 2l10 6-10 6z"/>',PAUSE='<path d="M3 2h4v12H3zM9 2h4v12H9z"/>';
-  const ui=on=>{np.classList.toggle('paused',!on);ppi.innerHTML=on?PAUSE:PLAY;if(on)np.classList.remove('need')};
-  const start=()=>{if(!ready)return;try{player.unMute();player.setVolume(85);player.playVideo();}catch(e){}};
-  const check=()=>setTimeout(()=>{if(want&&ready&&player.getPlayerState()!==1)np.classList.add('need')},1800);
-  go.addEventListener('click',()=>{want=true;splash.classList.add('hide');document.body.classList.remove('locked');start();check();});
-  pp.addEventListener('click',()=>{want=true;if(!ready)return;player.getPlayerState()===1?player.pauseVideo():start();check();});
+  const VID='-r679Hhs9Zs',np=document.getElementById('np');
+  let player=null,ready=false,unlocked=false;
+  const playing=()=>ready&&player.getPlayerState()===1;
+  const ui=()=>{if(!ready)return;np.classList.toggle('paused',!playing());np.classList.toggle('muted',player.isMuted());};
+  const unlock=()=>{
+    if(!ready||unlocked)return;
+    try{player.unMute();player.setVolume(90);player.seekTo(0,true);player.playVideo();}catch(e){}
+    setTimeout(()=>{ui();if(playing()&&!player.isMuted()){unlocked=true;off();}else{np.classList.add('need');}},1200);
+  };
+  const EV=['pointerdown','mousedown','touchend','click','keydown'];
+  const off=()=>EV.forEach(t=>document.removeEventListener(t,unlock,true));
+  EV.forEach(t=>document.addEventListener(t,unlock,true));
   window.onYouTubeIframeAPIReady=()=>{
     player=new YT.Player('ytp',{width:'96',height:'54',videoId:VID,
       playerVars:{autoplay:1,loop:1,playlist:VID,controls:0,playsinline:1,rel:0,disablekb:1,iv_load_policy:3},
       events:{
-        onReady:()=>{ready=true;start();if(want)check();},
-        onStateChange:e=>ui(e.data===1)
+        onReady:()=>{
+          ready=true;window.player=player;
+          player.unMute();player.setVolume(90);player.playVideo();
+          // if sound autoplay is blocked, start muted right away
+          let n=0;const chk=()=>{const st=player.getPlayerState();if(st===3&&n++<6){setTimeout(chk,500);return;}if(st!==1){player.mute();player.playVideo();}ui();};setTimeout(chk,900);
+        },
+        onStateChange:()=>{ui();if(ready&&playing()&&!player.isMuted()){unlocked=true;off();np.classList.remove('need');}}
       }});
   };
   const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);
