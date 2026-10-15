@@ -32,7 +32,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-
 main{max-width:860px;margin:0 auto;padding:28px 16px 64px}
 a{color:var(--acc)}
 .kicker{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--acc);text-transform:uppercase;margin:0 0 6px}
-h1{font-size:clamp(28px,6vw,40px);line-height:1.12;margin:0 0 10px;font-weight:800;letter-spacing:-.02em}
+h1{font-size:clamp(28px,6vw,38px);line-height:1.12;margin:0 0 10px;font-weight:800;letter-spacing:-.02em}
 h2{font-size:24px;line-height:1.25;margin:48px 0 6px;font-weight:700;letter-spacing:-.01em;scroll-margin-top:16px}
 h3{font-size:17px;margin:0;font-weight:600}
 .sub{color:var(--ink2);font-size:17px;margin:0 0 24px;max-width:640px}
@@ -117,7 +117,7 @@ h3{font-size:17px;margin:0;font-weight:600}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 main{padding-bottom:120px}
 /* header with photo */
-.head{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;margin-bottom:28px}
+.head{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;margin-bottom:28px}
 .head .sub{margin-bottom:0}
 .photo{position:relative;margin:0;border-radius:18px;overflow:hidden;aspect-ratio:1/1;background:#0f1d33;box-shadow:0 22px 44px -20px rgba(13,40,80,.6);transform:rotate(1.5deg);border:4px solid var(--card-hi)}
 .photo .slides{position:absolute;inset:0}.photo .slides .slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}.photo .slides .slide.on{opacity:1}.photo .slides .slide img{position:absolute;inset:0;width:100%;height:100%;display:block}.photo .slides .bg{object-fit:cover;filter:blur(18px) brightness(.55) saturate(1.1);transform:scale(1.2)}.photo .slides .fg{object-fit:contain}.photo .dots{position:absolute;right:16px;bottom:18px;z-index:2;display:flex;gap:5px}.photo .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);transition:background .3s}.photo .dots i.on{background:#fff}
@@ -451,9 +451,7 @@ const iso=d=>d.toISOString().slice(0,10);
       events:{
         onReady:()=>{
           ready=true;window.player=player;enableGo();if(pending){unlock();return;}
-          player.unMute();player.setVolume(90);player.playVideo();
-          // if sound autoplay is blocked, start muted right away
-          let n=0;const chk=()=>{const st=player.getPlayerState();if(st===3&&n++<6){setTimeout(chk,500);return;}if(st!==1){player.mute();player.playVideo();}ui();};setTimeout(chk,900);
+          player.mute();player.playVideo();ui(); // warm up muted; sound starts with "Iniciar"
         },
         onStateChange:()=>{ui();if(ready&&playing()&&!player.isMuted()){unlocked=true;off();np.classList.remove('need');}}
       }});
