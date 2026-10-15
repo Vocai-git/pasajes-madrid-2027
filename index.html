@@ -154,6 +154,18 @@ body.locked{overflow:hidden}
 #np.paused .eq i{animation:none}
 @keyframes eq{0%,100%{height:3px}50%{height:10px}}
 @media (prefers-reduced-motion:reduce){#np .eq i,#np .disc{animation:none}.photo{transform:none}}
+
+/* gate: the YouTube player itself is the start button (works on iPhone too) */
+#splash .gatehint{font-size:15px;font-weight:600;color:#fff;margin:0 0 12px}
+#splash .gatehint b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#e62117;font-size:11px;vertical-align:1px;margin:0 2px}
+#slot{width:min(340px,82vw);aspect-ratio:16/9;margin:0 auto;border-radius:14px;background:rgba(255,255,255,.08)}
+#yt{position:fixed;z-index:60;left:-9999px;top:0;width:10px;height:10px;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 18px 44px -12px rgba(0,0,0,.7),0 0 0 3px rgba(255,255,255,.18);transition:top .55s ease,left .55s ease,width .55s ease,height .55s ease,border-radius .55s ease}
+#yt iframe{width:100%;height:100%;display:block;border:0}
+#yt.mini{z-index:41;border-radius:8px;box-shadow:none}
+#np{display:none}
+body.entered #np{display:flex}
+#np .vslot{width:96px;height:54px;flex:none;border-radius:8px;background:#000}
+#np .eq i{animation:eq 1s infinite ease-in-out}
 </style>
 </head>
 <body>
@@ -162,14 +174,15 @@ body.locked{overflow:hidden}
     <div class="k">Buenos Aires ⇄ Madrid · mayo 2027</div>
     <h2>Próxima parada: Madrid</h2>
     <p>3 meses en Europa. Los pasajes más baratos están acá adentro.</p>
-    <button class="go" id="go" disabled>Cargando…</button>
-    <small>🔊 Subí el volumen</small>
+    <div class="gatehint" id="gatehint">Tocá <b>▶</b> para entrar · 🔊 subí el volumen</div>
+    <div id="slot" aria-hidden="true"></div>
+    <button class="go" id="go" hidden>Entrar ✈</button>
   </div>
 </div>
-<div id="np" class="paused" aria-label="Música">
-  <div class="vid"><div id="ytp"></div></div>
-  <div class="disc" aria-hidden="true"></div>
-  <div class="t"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><b>Break On Through</b>The Doors<span class="hint">🔊 Tocá cualquier parte de la pantalla</span><span class="nudge">Tocá el video para escuchar</span></div>
+<div id="yt"><div id="ytp"></div></div>
+<div id="np" aria-label="Música">
+  <div class="vslot" id="vslot"></div>
+  <div class="t"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><b>Break On Through</b>The Doors</div>
 </div>
 <div class="topbar"></div>
 <main>
@@ -423,40 +436,38 @@ const iso=d=>d.toISOString().slice(0,10);
   boxes.forEach(b=>{b.checked=!!saved[b.dataset.k];b.addEventListener('change',upd)});upd();
 })();
 
-// music: The Doors – Break On Through. Starts on page load; if the browser blocks sound,
-// it starts muted and turns the sound on (from the beginning) at the first touch/click/key anywhere.
+// music + gate: The Doors – Break On Through.
+// The page opens covered; the visitor taps the player (▶) to enter, which starts the song with sound on every
+// browser (iPhone included). If a video can't play there, the next upload is tried automatically.
 (function(){
-  const VID='-r679Hhs9Zs',np=document.getElementById('np');
-  let player=null,ready=false,unlocked=false,pending=false;
-  const playing=()=>ready&&player.getPlayerState()===1;
-  const ui=()=>{if(!ready)return;np.classList.toggle('paused',!playing());np.classList.toggle('muted',player.isMuted());};
-  const unlock=()=>{
-    if(unlocked)return;if(!ready){pending=true;return;}
-    try{player.unMute();player.setVolume(90);player.seekTo(0,true);player.playVideo();}catch(e){}
-    setTimeout(()=>{ui();if(playing()&&!player.isMuted()){unlocked=true;off();}else{np.classList.add('need');}},1200);
-  };
-  // start button: content stays hidden until "Iniciar" is clicked; that click turns the music on
-  const splash=document.getElementById('splash'),go=document.getElementById('go');
+  const IDS=['gdnzBNMfZfo','NFeUko-lQHg','-r679Hhs9Zs'];
+  const splash=document.getElementById('splash'),go=document.getElementById('go'),yt=document.getElementById('yt'),
+        slot=document.getElementById('slot'),vslot=document.getElementById('vslot'),hint=document.getElementById('gatehint');
   const first=document.querySelector('#slides img');if(first)splash.style.backgroundImage=`url("${first.src}")`;
   document.body.classList.add('locked');
-  const enableGo=()=>{go.disabled=false;go.textContent='Iniciar ✈';};
-  setTimeout(enableGo,4000);
-  go.addEventListener('click',()=>{splash.classList.add('hide');document.body.classList.remove('locked');unlock();});
-  const EV=['pointerdown','mousedown','touchend','click','keydown'];
-  const off=()=>EV.forEach(t=>document.removeEventListener(t,unlock,true));
-  EV.forEach(t=>document.addEventListener(t,unlock,true));
+  let player=null,idx=0,entered=false;
+  const place=el=>{const r=el.getBoundingClientRect();Object.assign(yt.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});};
+  const layout=()=>place(entered?vslot:slot);
+  addEventListener('resize',layout);addEventListener('orientationchange',()=>setTimeout(layout,300));
+  const enter=()=>{if(entered)return;entered=true;splash.classList.add('hide');document.body.classList.remove('locked');
+    document.body.classList.add('entered');yt.classList.add('mini');requestAnimationFrame(layout);};
+  const fallback=()=>{hint.hidden=true;slot.hidden=true;yt.style.left='-9999px';go.hidden=false;};
+  go.addEventListener('click',()=>{enter();try{player&&player.playVideo()}catch(e){}});
   window.onYouTubeIframeAPIReady=()=>{
-    player=new YT.Player('ytp',{width:'96',height:'54',videoId:VID,
-      playerVars:{autoplay:1,loop:1,playlist:VID,controls:0,playsinline:1,rel:0,disablekb:1,iv_load_policy:3},
+    layout();
+    player=new YT.Player('ytp',{width:'100%',height:'100%',videoId:IDS[0],
+      playerVars:{playsinline:1,rel:0,controls:0,disablekb:1,iv_load_policy:3,fs:0},
       events:{
-        onReady:()=>{
-          ready=true;window.player=player;enableGo();if(pending){unlock();return;}
-          player.mute();player.playVideo();ui(); // warm up muted; sound starts with "Iniciar"
+        onReady:()=>{window.player=player;layout();},
+        onStateChange:e=>{
+          if(e.data===1){enter();}
+          if(e.data===0){player.seekTo(0,true);player.playVideo();}   // loop
         },
-        onStateChange:()=>{ui();if(ready&&playing()&&!player.isMuted()){unlocked=true;off();np.classList.remove('need');}}
+        onError:()=>{idx++;if(idx<IDS.length){player.cueVideoById(IDS[idx]);}else{fallback();}}
       }});
   };
-  const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);
+  setTimeout(()=>{if(!player)fallback();},7000);   // YouTube blocked: let them in anyway
+  const sc=document.createElement('script');sc.src='https://www.youtube.com/iframe_api';document.head.appendChild(sc);
 })();
 // photo slideshow: changes every 2 seconds
 (function(){
